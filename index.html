@@ -226,7 +226,7 @@
 .hero-illus-wrap{overflow:visible}
 .reactor-svg{width:100%;height:auto;display:block;filter:drop-shadow(0 0 90px rgba(255,122,0,.45)) drop-shadow(0 0 30px rgba(255,193,77,.22))}
 .reactor-svg .core-pulse{transform-box:fill-box;transform-origin:center;animation:reactor-core-pulse 4.2s ease-in-out infinite}
-.reactor-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:24%;max-width:130px;height:auto;pointer-events:none;z-index:2;filter:brightness(1.18) contrast(1.08) saturate(1.25) drop-shadow(0 0 34px rgba(255,69,0,.6)) drop-shadow(0 0 18px rgba(255,122,0,.95)) drop-shadow(0 0 8px rgba(255,193,77,.95)) drop-shadow(0 0 2px rgba(255,255,255,.85));animation:reactor-logo-float 6.5s ease-in-out infinite,reactor-logo-flicker 2.4s ease-in-out infinite}
+.reactor-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:24%;max-width:130px;height:auto;pointer-events:none;z-index:2;filter:brightness(1.18) contrast(1.08) saturate(1.25) drop-shadow(0 0 34px rgba(255,69,0,.6)) drop-shadow(0 0 18px rgba(255,122,0,.95)) drop-shadow(0 0 8px rgba(255,193,77,.95)) drop-shadow(0 0 2px rgba(255,255,255,.85));animation:reactor-logo-float 6.5s ease-in-out infinite,reactor-logo-flicker 2.4s ease-in-out infinite}.reactor-stage{position:relative;width:100%}.reactor-stage::before{content:"";display:block;padding-bottom:calc(480 / 520 * 100%)}.reactor-stage>svg{position:absolute;inset:0;width:100%;height:100%;display:block}.reactor-bg-svg{z-index:1}.orbit-back-svg{z-index:2;opacity:.55}.planet-sphere-svg{z-index:3}.reactor-stage .reactor-logo{z-index:4}.orbit-front-svg{z-index:5}.reactor-particles-svg{z-index:6;pointer-events:none}
 
 @keyframes reactor-core-pulse{
   0%,100%{transform:scale(1);    opacity:.92}
@@ -247,8 +247,8 @@
 .metric-ml{animation-delay:-5.5s}
 
 @media (prefers-reduced-motion: reduce){
-  .reactor-svg *,.reactor-logo,.hero-metric{animation:none!important}
-  .reactor-svg animateMotion{display:none}
+  .reactor-stage *,.reactor-logo,.hero-metric{animation:none!important}
+  .reactor-stage animateMotion{display:none}
 }
 
 
@@ -571,30 +571,43 @@ h1.hero-title{font-family:var(--font-display);font-weight:700;line-height:1;lett
 .marquee-wrap:hover .marquee-track{animation-play-state:paused}
 .partner-logo{display:flex;align-items:center;justify-content:center;width:203px;height:95px;background:transparent;border:none;border-radius:0;padding:13px 34px;flex-shrink:0;box-shadow:none;transition:transform .25s}
 .partner-logo:hover{transform:scale(1.05)}
-.partner-logo img{max-height:68px;width:auto;max-width:100%;display:block;object-fit:contain;filter:brightness(1) saturate(1)}
+.partner-logo img{max-height:68px;width:auto;max-width:100%;display:block;object-fit:contain;filter:brightness(1) saturate(1)}.partner-logo[style*="--scale"] img{max-height:calc(68px * var(--scale))}
 /* ── TEAM ── */
 #team{background:var(--bg-low)}
 .team-header{text-align:center;margin-bottom:56px}
 .team-grid{display:flex;flex-wrap:wrap;gap:24px;max-width:1200px;margin:0 auto;justify-content:center}
-.team-grid .team-card{width:calc(25% - 18px);min-width:0}
+.team-grid+.team-grid{margin-top:24px}.team-grid-primary .team-card{width:calc(25% - 18px);min-width:0}.team-grid-secondary .team-card{width:calc(33.333% - 16px);min-width:0}
 .team-card{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:20px;padding:0;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;position:relative}
 .team-card:hover{transform:translateY(-4px);border-color:rgba(255,122,0,.35);box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .team-card-img{width:100%;aspect-ratio:1/0.65;object-fit:cover;object-position:top;display:block;filter:brightness(.9) saturate(1.05)}
-.team-card-body{padding:24px 28px 28px}
+.team-card-body{padding:24px 28px 28px;container-type:inline-size}
 .team-card-name{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--on-surface);line-height:1.2}
 .team-card-role{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--secondary);margin-top:6px;font-weight:500}
 .team-card-divider{height:1px;background:var(--border-subtle);margin:16px 0}
 .team-card-stats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.team-stat{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--on-surface-var);background:rgba(255,122,0,.08);border:1px solid var(--border);border-radius:100px;padding:4px 12px}
-.team-stat-num{font-family:var(--font-display);font-weight:700;color:var(--primary);font-size:12px}
+.team-stat{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:var(--on-surface-var);background:rgba(255,122,0,.08);border:1px solid var(--border);border-radius:999px;padding:10px 18px;width:fit-content;max-width:320px;white-space:normal;word-break:break-word;line-height:1.4}
+.team-stat-num{font-family:var(--font-display);font-weight:700;color:var(--primary);font-size:12px;white-space:nowrap;flex-shrink:0}
+@container (max-width: 280px){
+  .team-card-stats{display:grid;grid-template-columns:1fr;gap:12px}
+  .team-stat{width:100%;max-width:none;min-width:0;white-space:nowrap;justify-content:center;overflow:hidden;text-overflow:ellipsis}
+}
 .team-card-quote{font-size:13px;color:var(--on-surface-var);line-height:1.65;font-style:italic;position:relative;padding-left:16px;border-left:2px solid var(--primary)}
-@media(max-width:768px){
-  .team-grid .team-card{width:100%;max-width:400px}
+@media(max-width:1100px){
+  .team-grid-primary .team-card{width:calc(50% - 12px);max-width:400px}
+}
+@media(max-width:720px){
+  .team-grid-secondary .team-card{width:calc(50% - 12px);max-width:400px}
+  .team-grid-secondary .team-card:nth-child(2){order:3}
+  .team-grid-secondary .team-card:nth-child(3){order:2}
+}
+@media(max-width:540px){
+  .team-grid-primary .team-card,.team-grid-secondary .team-card{width:100%;max-width:400px}
 }
 
 .testimonial-wrap{margin-top:64px;background:rgba(255,122,0,.06);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;padding:48px 56px;text-align:center;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .testimonial-wrap::before{content:'"';position:absolute;top:-20px;left:40px;font-family:var(--font-display);font-size:160px;font-weight:700;color:rgba(255,122,0,.06);line-height:1;pointer-events:none}
 .testimonial-wrap > img{order:-1;height:96px!important;width:auto;margin:0 0 24px 0!important;object-fit:contain;filter:drop-shadow(0 4px 16px rgba(255,122,0,.25));position:relative;z-index:1}
+.testimonial-wrap > img.testi-sm{height:67px!important}
 .testimonial-quote{font-family:var(--font-display);font-size:clamp(18px,1.8vw,22px);font-weight:500;color:var(--on-surface);line-height:1.55;max-width:800px;margin:0 auto;position:relative;z-index:1;font-style:italic}
 .testimonial-author{margin-top:24px;font-size:14px;color:var(--on-surface-var);display:flex;align-items:center;justify-content:center;gap:12px}
 .testimonial-author::before,.testimonial-author::after{content:'';display:block;width:32px;height:1px;background:var(--outline)}
@@ -672,9 +685,19 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
 /* ── RESPONSIVE ── */
 @media(max-width:1100px){
   .container,.footer-inner,.nav-inner{padding:0 40px}
-  .hero-inner{padding:0 40px;grid-template-columns:1fr}
-  .hero-right{display:none}
-  .hero-left{padding:80px 0 0}
+  .hero-inner{padding:0 40px;grid-template-columns:1fr;justify-items:center}
+  .hero-right{display:flex;width:100%;justify-content:center;margin-top:24px}
+  .hero-illus-wrap{width:clamp(320px,55vw,480px);max-width:100%;margin:0 auto;transform:none}
+  .hero-metric{display:block;position:absolute;width:clamp(118px,26vw,148px);padding:10px 12px;z-index:5;animation-duration:7s;box-shadow:0 6px 20px rgba(0,0,0,.5),0 0 14px rgba(255,122,0,.14),inset 0 0 0 1px rgba(255,193,77,.06)}
+  .hero-metric .metric-eyebrow{font-size:9px;gap:5px;margin-bottom:4px;letter-spacing:.08em}
+  .hero-metric-num{font-size:20px}
+  .hero-metric-label{font-size:10px;margin-top:2px;letter-spacing:.04em}
+  .pulse-dot{width:5px;height:5px;margin-right:4px}
+  .metric-tl{top:2%!important;left:-6px!important;right:auto!important;bottom:auto!important}
+  .metric-tr{top:2%!important;right:-6px!important;left:auto!important;bottom:auto!important}
+  .metric-ml{top:auto!important;bottom:2%!important;left:-6px!important;right:auto!important}
+  .metric-b {top:auto!important;bottom:2%!important;right:-6px!important;left:auto!important}
+  .hero-left{padding:80px 0 0;width:100%}
   section{padding:80px 0}
   #stats{padding:80px 0}
   .about-grid,.stats-grid-wrap{grid-template-columns:1fr;gap:48px}
@@ -708,6 +731,11 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
   .hero-left{padding:64px 0 0}
   h1.hero-title .hero-pre{font-size:clamp(13px,3.5vw,18px)}
   h1.hero-title .hero-brand{font-size:clamp(40px,11vw,64px)}
+  .hero-illus-wrap{width:clamp(240px,72vw,360px)}
+  .hero-metric{width:clamp(108px,28vw,134px);padding:8px 10px}
+  .hero-metric .metric-eyebrow{font-size:8.5px;margin-bottom:3px}
+  .hero-metric-num{font-size:17px}
+  .hero-metric-label{font-size:9.5px}
   .hero-btns{flex-direction:column;gap:10px}
   .btn-primary,.btn-outline{width:100%;justify-content:center}
   .about-grid{grid-template-columns:1fr;gap:32px}
@@ -729,12 +757,12 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
   #partners>.partners-inner{padding:0 20px}
   .partners-marquee-area{max-width:100%}
   .partner-logo{width:169px;height:81px;padding:10px 26px}
-  .partner-logo img{max-height:57px}
+  .partner-logo img{max-height:57px}.partner-logo[style*="--scale"] img{max-height:calc(57px * var(--scale))}
 }
 @media(max-width:480px){
   #partners>.partners-inner{padding:0 16px}
   .partner-logo{width:152px;height:74px;padding:10px 20px}
-  .partner-logo img{max-height:51px}
+  .partner-logo img{max-height:51px}.partner-logo[style*="--scale"] img{max-height:calc(51px * var(--scale))}
   .marquee-track{gap:14px}
   .container,.nav-inner,.footer-inner{padding:0 16px}
   nav{padding:0}
@@ -749,6 +777,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
   .cta-title{font-size:clamp(32px,8vw,48px)}
   .testimonial-wrap{padding:32px 24px}
   .testimonial-wrap > img{height:72px!important;margin:0 0 18px 0!important}
+  .testimonial-wrap > img.testi-sm{height:50px!important}
   .contact-form{padding:28px 20px}
   footer{padding:24px 0}
 }
@@ -760,7 +789,12 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
 <nav id="navbar">
   <div class="nav-inner">
   <a href="#" class="nav-logo">
-    <img class="nav-logo-img" src="assets/img-8c47efcc1c.png" alt="FLUX Labs">
+    <!--
+      LOGO: The SVG below is a geometric FL mark matching your brand style.
+      To use your actual logo image (requires transparent background PNG):
+      Replace this SVG with: <img src="flux-labs-logo.png" alt="FLUX Labs" style="height:32px;filter:brightness(10) saturate(0)">
+    -->
+    <img class="nav-logo-img" src="flux-labs-logo.png" alt="FLUX Labs">
   </a>
   <ul class="nav-links">
     <li><a href="#about" data-i18n="nav-lab">The Lab</a></li>
@@ -810,7 +844,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
     <div class="hero-left">
       <div class="hero-eyebrow-row">
         <span class="tag" data-i18n="hero-tag">Unified Growth Partner</span>
-        <span class="hero-eyebrow" data-i18n="hero-eyebrow">From Established to Web3, and Beyond</span>
+        <span class="hero-eyebrow" data-i18n="hero-eyebrow">From Established to the Intelligent Era, and Beyond</span>
       </div>
       <h1 class="hero-title">
         <span class="hero-pre" data-i18n="hero-pre">The Next Chapter of</span>
@@ -826,158 +860,183 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
     <div class="hero-right">
       <div class="hero-illus-wrap">
         <!-- Reactor-core energy hero illustration -->
-        <svg class="reactor-svg" viewBox="0 0 520 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <!-- Plasma core radial: white-hot center → amber → neon orange → transparent -->
-            <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
-              <!-- DARK center → subtle warm mid → bright orange rim near ring -->
-              <stop offset="0%"   stop-color="#070707" stop-opacity=".88"/>
-              <stop offset="40%"  stop-color="#1A0E05" stop-opacity=".75"/>
-              <stop offset="75%"  stop-color="#FF7A00" stop-opacity=".20"/>
-              <stop offset="100%" stop-color="#FFC14D" stop-opacity=".55"/>
-            </radialGradient>
+        <div class="reactor-stage">
+          <!-- 1) Background halo + radar rings + crosshair. All defs live here. -->
+          <svg class="reactor-bg-svg" viewBox="0 0 520 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#070707" stop-opacity=".88"/>
+                <stop offset="40%"  stop-color="#1A0E05" stop-opacity=".75"/>
+                <stop offset="75%"  stop-color="#FF7A00" stop-opacity=".20"/>
+                <stop offset="100%" stop-color="#FFC14D" stop-opacity=".55"/>
+              </radialGradient>
+              <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"  stop-color="#FF7A00" stop-opacity=".18"/>
+                <stop offset="55%" stop-color="#FF7A00" stop-opacity=".02"/>
+                <stop offset="100%" stop-color="#FF7A00" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="orbGrad" cx="32%" cy="30%" r="70%">
+                <stop offset="0%"  stop-color="#FFF6E0"/>
+                <stop offset="35%" stop-color="#FFC14D"/>
+                <stop offset="80%" stop-color="#FF7A00"/>
+                <stop offset="100%" stop-color="#B53D00"/>
+              </radialGradient>
+              <linearGradient id="ringStroke" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"  stop-color="#FFC14D"/>
+                <stop offset="50%" stop-color="#FF9D2E"/>
+                <stop offset="100%" stop-color="#FF7A00"/>
+              </linearGradient>
+              <filter id="ringGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="5"/>
+              </filter>
+              <filter id="orbGlow" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="3" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="coreGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="10" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
             <!-- Outer halo bloom -->
-            <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"  stop-color="#FF7A00" stop-opacity=".18"/>
-              <stop offset="55%" stop-color="#FF7A00" stop-opacity=".02"/>
-              <stop offset="100%" stop-color="#FF7A00" stop-opacity="0"/>
-            </radialGradient>
-            <!-- 3D planet orb gradient (highlight upper-left) -->
-            <radialGradient id="orbGrad" cx="32%" cy="30%" r="70%">
-              <stop offset="0%"  stop-color="#FFF6E0"/>
-              <stop offset="35%" stop-color="#FFC14D"/>
-              <stop offset="80%" stop-color="#FF7A00"/>
-              <stop offset="100%" stop-color="#B53D00"/>
-            </radialGradient>
-            <!-- Ring stroke gradient -->
-            <linearGradient id="ringStroke" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"  stop-color="#FFC14D"/>
-              <stop offset="50%" stop-color="#FF9D2E"/>
-              <stop offset="100%" stop-color="#FF7A00"/>
-            </linearGradient>
-            <!-- Glow filters -->
-            <filter id="ringGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="5"/>
-            </filter>
-            <filter id="orbGlow" x="-100%" y="-100%" width="300%" height="300%">
-              <feGaussianBlur stdDeviation="3" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="coreGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="10" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
+            <circle cx="260" cy="240" r="235" fill="url(#haloGrad)"/>
+            <!-- Concentric dotted background rings (radar feel) -->
+            <g fill="none" stroke="#FF7A00" stroke-dasharray="1 4">
+              <circle cx="260" cy="240" r="135" opacity=".22"/>
+              <circle cx="260" cy="240" r="158" opacity=".18"/>
+              <circle cx="260" cy="240" r="182" opacity=".15"/>
+              <circle cx="260" cy="240" r="208" opacity=".12"/>
+              <circle cx="260" cy="240" r="232" opacity=".09"/>
+            </g>
+            <!-- Subtle crosshair guide -->
+            <g stroke="rgba(255,122,0,.12)" stroke-width=".6" stroke-dasharray="1 8">
+              <line x1="20" y1="240" x2="500" y2="240"/>
+              <line x1="260" y1="20" x2="260" y2="460"/>
+            </g>
+          </svg>
 
-          <!-- Outer halo bloom -->
-          <circle cx="260" cy="240" r="235" fill="url(#haloGrad)"/>
+          <!-- 2) BACK orbit halves: arcs + planets visible only when they are on the back arc. -->
+          <svg class="orbit-svg orbit-back-svg" viewBox="0 0 520 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g class="orbit orbit-1" transform="rotate(-22 260 240)">
+              <path class="orbit-arc orbit-arc-back" d="M 40 240 A 220 80 0 0 1 480 240" stroke="url(#ringStroke)" stroke-width=".9" fill="none" opacity=".55"/>
+              <circle r="8" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="19s" repeatCount="indefinite" rotate="auto"
+                               path="M 40 240 A 220 80 0 1 1 480 240 A 220 80 0 1 1 40 240"/>
+                <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.49;0.5;0.99;1" dur="19s" repeatCount="indefinite"/>
+              </circle>
+              <circle r="4" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="19s" repeatCount="indefinite" begin="-9.5s"
+                               path="M 40 240 A 220 80 0 1 1 480 240 A 220 80 0 1 1 40 240"/>
+                <animate attributeName="opacity" values="0;0;0.9;0.9;0" keyTimes="0;0.49;0.5;0.99;1" dur="19s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+            <g class="orbit orbit-2" transform="rotate(30 260 240)">
+              <path class="orbit-arc orbit-arc-back" d="M 50 240 A 210 65 0 0 1 470 240" stroke="#FF9D2E" stroke-width=".8" fill="none" opacity=".5"/>
+              <path class="orbit-arc-dash orbit-arc-back" d="M 50 240 A 210 65 0 0 1 470 240" stroke="#FFC14D" stroke-width="1" stroke-dasharray="1 5" fill="none" opacity=".35"/>
+              <circle r="6" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="14s" repeatCount="indefinite" begin="-2s"
+                               path="M 50 240 A 210 65 0 1 1 470 240 A 210 65 0 1 1 50 240"/>
+                <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.352;0.362;0.852;0.862;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle r="3" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="14s" repeatCount="indefinite" begin="-9s"
+                               path="M 50 240 A 210 65 0 1 1 470 240 A 210 65 0 1 1 50 240"/>
+                <animate attributeName="opacity" values="0;0;0.85;0.85;0;0" keyTimes="0;0.352;0.362;0.852;0.862;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+            <g class="orbit orbit-3" transform="rotate(-55 260 240)">
+              <path class="orbit-arc orbit-arc-back" d="M 70 240 A 190 45 0 0 1 450 240" stroke="#FF7A00" stroke-width=".7" fill="none" opacity=".45"/>
+              <circle r="5" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="11s" repeatCount="indefinite"
+                               path="M 70 240 A 190 45 0 1 1 450 240 A 190 45 0 1 1 70 240"/>
+                <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.49;0.5;0.99;1" dur="11s" repeatCount="indefinite"/>
+              </circle>
+              <circle r="2.5" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="11s" repeatCount="indefinite" begin="-5.5s"
+                               path="M 70 240 A 190 45 0 1 1 450 240 A 190 45 0 1 1 70 240"/>
+                <animate attributeName="opacity" values="0;0;0.8;0.8;0" keyTimes="0;0.49;0.5;0.99;1" dur="11s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+          </svg>
 
-          <!-- Concentric dotted background rings (radar feel) -->
-          <g fill="none" stroke="#FF7A00" stroke-dasharray="1 4">
-            <circle cx="260" cy="240" r="135" opacity=".22"/>
-            <circle cx="260" cy="240" r="158" opacity=".18"/>
-            <circle cx="260" cy="240" r="182" opacity=".15"/>
-            <circle cx="260" cy="240" r="208" opacity=".12"/>
-            <circle cx="260" cy="240" r="232" opacity=".09"/>
-          </g>
+          <!-- 3) Planet sphere: housing ring + plasma core + dark backdrop. Keeps .reactor-svg class so the existing drop-shadow + core-pulse animation still apply. -->
+          <svg class="reactor-svg planet-sphere-svg" viewBox="0 0 520 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Reactor housing ring: 4-layer glow build-up -->
+            <circle cx="260" cy="240" r="115" stroke="#FF7A00" stroke-width="14" fill="none" opacity=".18" filter="url(#ringGlow)"/>
+            <circle cx="260" cy="240" r="112" stroke="#FF9D2E" stroke-width="6"  fill="none" opacity=".55" filter="url(#ringGlow)"/>
+            <circle cx="260" cy="240" r="110" stroke="#FFE6BF" stroke-width="2.6" fill="none" opacity="1"/>
+            <circle cx="260" cy="240" r="108.5" stroke="#FFF6E0" stroke-width=".6" fill="none" opacity=".85"/>
+            <!-- Plasma core: lens disc + bright inner rim + dark contrast disk behind F -->
+            <circle class="core-pulse" cx="260" cy="240" r="104" fill="url(#coreGrad)" filter="url(#coreGlow)"/>
+            <circle cx="260" cy="240" r="104" stroke="#FFC14D" stroke-width="3" fill="none" opacity=".55" filter="url(#ringGlow)"/>
+            <circle cx="260" cy="240" r="72" fill="rgba(8,6,4,.78)"/>
+          </svg>
 
-          <!-- Subtle crosshair guide -->
-          <g stroke="rgba(255,122,0,.12)" stroke-width=".6" stroke-dasharray="1 8">
-            <line x1="20" y1="240" x2="500" y2="240"/>
-            <line x1="260" y1="20" x2="260" y2="460"/>
-          </g>
+          <!-- 4) Centered FLUX logo over reactor core -->
+          <img class="reactor-logo" src="flux-labs-reactor-logo.png" alt="FLUX Labs"/>
 
-          <!-- Bright reactor housing ring: 4-layer glow build-up -->
-          <!-- 1. broad outer glow halo -->
-          <circle cx="260" cy="240" r="115" stroke="#FF7A00" stroke-width="14"
-                  fill="none" opacity=".18" filter="url(#ringGlow)"/>
-          <!-- 2. medium glow -->
-          <circle cx="260" cy="240" r="112" stroke="#FF9D2E" stroke-width="6"
-                  fill="none" opacity=".55" filter="url(#ringGlow)"/>
-          <!-- 3. sharp neon ring -->
-          <circle cx="260" cy="240" r="110" stroke="#FFE6BF" stroke-width="2.6"
-                  fill="none" opacity="1"/>
-          <!-- 4. inner pin-sharp highlight -->
-          <circle cx="260" cy="240" r="108.5" stroke="#FFF6E0" stroke-width=".6"
-                  fill="none" opacity=".85"/>
+          <!-- 5) FRONT orbit halves: arcs + planets visible only when they are on the front arc. -->
+          <svg class="orbit-svg orbit-front-svg" viewBox="0 0 520 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g class="orbit orbit-1" transform="rotate(-22 260 240)">
+              <path class="orbit-arc orbit-arc-front" d="M 40 240 A 220 80 0 0 0 480 240" stroke="url(#ringStroke)" stroke-width=".9" fill="none" opacity=".85"/>
+              <circle r="8" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="19s" repeatCount="indefinite" rotate="auto"
+                               path="M 40 240 A 220 80 0 1 1 480 240 A 220 80 0 1 1 40 240"/>
+                <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.49;0.5;0.99;1" dur="19s" repeatCount="indefinite"/>
+              </circle>
+              <circle r="4" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="19s" repeatCount="indefinite" begin="-9.5s"
+                               path="M 40 240 A 220 80 0 1 1 480 240 A 220 80 0 1 1 40 240"/>
+                <animate attributeName="opacity" values="0.9;0.9;0;0;0.9" keyTimes="0;0.49;0.5;0.99;1" dur="19s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+            <g class="orbit orbit-2" transform="rotate(30 260 240)">
+              <path class="orbit-arc orbit-arc-front" d="M 50 240 A 210 65 0 0 0 470 240" stroke="#FF9D2E" stroke-width=".8" fill="none" opacity=".8"/>
+              <path class="orbit-arc-dash orbit-arc-front" d="M 50 240 A 210 65 0 0 0 470 240" stroke="#FFC14D" stroke-width="1" stroke-dasharray="1 5" fill="none" opacity=".55"/>
+              <circle r="6" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="14s" repeatCount="indefinite" begin="-2s"
+                               path="M 50 240 A 210 65 0 1 1 470 240 A 210 65 0 1 1 50 240"/>
+                <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.352;0.362;0.852;0.862;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle r="3" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="14s" repeatCount="indefinite" begin="-9s"
+                               path="M 50 240 A 210 65 0 1 1 470 240 A 210 65 0 1 1 50 240"/>
+                <animate attributeName="opacity" values="0.85;0.85;0;0;0.85;0.85" keyTimes="0;0.352;0.362;0.852;0.862;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+            <g class="orbit orbit-3" transform="rotate(-55 260 240)">
+              <path class="orbit-arc orbit-arc-front" d="M 70 240 A 190 45 0 0 0 450 240" stroke="#FF7A00" stroke-width=".7" fill="none" opacity=".75"/>
+              <circle r="5" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="11s" repeatCount="indefinite"
+                               path="M 70 240 A 190 45 0 1 1 450 240 A 190 45 0 1 1 70 240"/>
+                <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.49;0.5;0.99;1" dur="11s" repeatCount="indefinite"/>
+              </circle>
+              <circle r="2.5" fill="url(#orbGrad)" filter="url(#orbGlow)">
+                <animateMotion dur="11s" repeatCount="indefinite" begin="-5.5s"
+                               path="M 70 240 A 190 45 0 1 1 450 240 A 190 45 0 1 1 70 240"/>
+                <animate attributeName="opacity" values="0.8;0.8;0;0;0.8" keyTimes="0;0.49;0.5;0.99;1" dur="11s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+          </svg>
 
-          <!-- Plasma core: dark-center "lens" + bright inner-rim energy + dark F backdrop -->
-          <!-- 1) Lens disc: dark in the centre, warm tint at edges -->
-          <circle class="core-pulse" cx="260" cy="240" r="104"
-                  fill="url(#coreGrad)" filter="url(#coreGlow)"/>
-          <!-- 2) Bright inner-rim energy ring (sits just inside the housing ring) -->
-          <circle cx="260" cy="240" r="104" stroke="#FFC14D" stroke-width="3"
-                  fill="none" opacity=".55" filter="url(#ringGlow)"/>
-          <!-- 3) Dark contrast disk directly behind the F mark -->
-          <circle cx="260" cy="240" r="72" fill="rgba(8,6,4,.78)"/>
-
-          <!-- ─── Orbit 1: tilted -22°, slow ──────────────────────── -->
-          <g class="orbit orbit-1" transform="rotate(-22 260 240)">
-            <path d="M 40 240 A 220 80 0 1 1 480 240 A 220 80 0 1 1 40 240" stroke="url(#ringStroke)" stroke-width=".9"
-                  fill="none" opacity=".55"/>
-            <path d="M 40 240 A 220 80 0 1 1 480 240 A 220 80 0 1 1 40 240" stroke="#FFC14D" stroke-width="2"
-                  fill="none" opacity="0" stroke-dasharray="1 999" pathLength="100"/>
-            <!-- Planet A (large, slow) -->
-            <circle r="8" fill="url(#orbGrad)" filter="url(#orbGlow)">
-              <animateMotion dur="19s" repeatCount="indefinite" rotate="auto"
-                             path="M 40 240 A 220 80 0 1 1 480 240 A 220 80 0 1 1 40 240"/>
-            </circle>
-            <!-- Planet B (small, half-phase offset) -->
-            <circle r="4" fill="url(#orbGrad)" filter="url(#orbGlow)" opacity=".9">
-              <animateMotion dur="19s" repeatCount="indefinite" begin="-9.5s"
-                             path="M 40 240 A 220 80 0 1 1 480 240 A 220 80 0 1 1 40 240"/>
-            </circle>
-          </g>
-
-          <!-- ─── Orbit 2: tilted +30°, medium ─────────────────────── -->
-          <g class="orbit orbit-2" transform="rotate(30 260 240)">
-            <path d="M 50 240 A 210 65 0 1 1 470 240 A 210 65 0 1 1 50 240" stroke="#FF9D2E" stroke-width=".8"
-                  fill="none" opacity=".5"/>
-            <!-- Dashed accent overlay (gives a "rotating" feel even without spinning) -->
-            <path d="M 50 240 A 210 65 0 1 1 470 240 A 210 65 0 1 1 50 240" stroke="#FFC14D" stroke-width="1"
-                  stroke-dasharray="1 5" fill="none" opacity=".35"/>
-            <circle r="6" fill="url(#orbGrad)" filter="url(#orbGlow)">
-              <animateMotion dur="14s" repeatCount="indefinite" begin="-2s"
-                             path="M 50 240 A 210 65 0 1 1 470 240 A 210 65 0 1 1 50 240"/>
-            </circle>
-            <circle r="3" fill="url(#orbGrad)" filter="url(#orbGlow)" opacity=".85">
-              <animateMotion dur="14s" repeatCount="indefinite" begin="-9s"
-                             path="M 50 240 A 210 65 0 1 1 470 240 A 210 65 0 1 1 50 240"/>
-            </circle>
-          </g>
-
-          <!-- ─── Orbit 3: tilted -55°, fast, tighter ──────────────── -->
-          <g class="orbit orbit-3" transform="rotate(-55 260 240)">
-            <path d="M 70 240 A 190 45 0 1 1 450 240 A 190 45 0 1 1 70 240" stroke="#FF7A00" stroke-width=".7"
-                  fill="none" opacity=".45"/>
-            <circle r="5" fill="url(#orbGrad)" filter="url(#orbGlow)">
-              <animateMotion dur="11s" repeatCount="indefinite"
-                             path="M 70 240 A 190 45 0 1 1 450 240 A 190 45 0 1 1 70 240"/>
-            </circle>
-            <circle r="2.5" fill="url(#orbGrad)" filter="url(#orbGlow)" opacity=".8">
-              <animateMotion dur="11s" repeatCount="indefinite" begin="-5.5s"
-                             path="M 70 240 A 190 45 0 1 1 450 240 A 190 45 0 1 1 70 240"/>
-            </circle>
-          </g>
-
-          <!-- Ambient sparkle particles -->
-          <g fill="#FFC14D">
-            <circle cx="180" cy="120" r="1.5" opacity=".7"><animate attributeName="opacity" values=".2;.9;.2" dur="3.2s" repeatCount="indefinite"/></circle>
-            <circle cx="340" cy="140" r="1.2" opacity=".5"><animate attributeName="opacity" values=".15;.7;.15" dur="4.1s" repeatCount="indefinite"/></circle>
-            <circle cx="380" cy="320" r="1.8" opacity=".7"><animate attributeName="opacity" values=".2;.95;.2" dur="2.8s" repeatCount="indefinite"/></circle>
-            <circle cx="150" cy="340" r="1.4" opacity=".55"><animate attributeName="opacity" values=".15;.8;.15" dur="3.7s" repeatCount="indefinite"/></circle>
-            <circle cx="445" cy="170" r="1.2" opacity=".5"><animate attributeName="opacity" values=".1;.7;.1" dur="4.4s" repeatCount="indefinite"/></circle>
-            <circle cx="75"  cy="190" r="1.5" opacity=".6"><animate attributeName="opacity" values=".2;.85;.2" dur="3.4s" repeatCount="indefinite"/></circle>
-            <circle cx="200" cy="395" r="1.3" opacity=".55"><animate attributeName="opacity" values=".15;.7;.15" dur="3.9s" repeatCount="indefinite"/></circle>
-            <circle cx="330" cy="60"  r="1.4" opacity=".55"><animate attributeName="opacity" values=".15;.75;.15" dur="3.1s" repeatCount="indefinite"/></circle>
-            <circle cx="60"  cy="300" r="1" opacity=".45"><animate attributeName="opacity" values=".1;.6;.1" dur="4.6s" repeatCount="indefinite"/></circle>
-            <circle cx="460" cy="320" r="1.3" opacity=".5"><animate attributeName="opacity" values=".15;.7;.15" dur="3.5s" repeatCount="indefinite"/></circle>
-            <circle cx="110" cy="240" r="1.4" opacity=".5"><animate attributeName="opacity" values=".2;.8;.2" dur="2.9s" repeatCount="indefinite"/></circle>
-            <circle cx="410" cy="240" r="1.2" opacity=".5"><animate attributeName="opacity" values=".15;.7;.15" dur="4.3s" repeatCount="indefinite"/></circle>
-          </g>
-        </svg>
-        <!-- Centered logo over reactor core -->
-        <img class="reactor-logo" src="assets/img-d97686bebd.png" alt="FLUX Labs"/>
+          <!-- 6) Ambient sparkle particles on top -->
+          <svg class="reactor-particles-svg" viewBox="0 0 520 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g fill="#FFC14D">
+              <circle cx="180" cy="120" r="1.5" opacity=".7"><animate attributeName="opacity" values=".2;.9;.2" dur="3.2s" repeatCount="indefinite"/></circle>
+              <circle cx="340" cy="140" r="1.2" opacity=".5"><animate attributeName="opacity" values=".15;.7;.15" dur="4.1s" repeatCount="indefinite"/></circle>
+              <circle cx="380" cy="320" r="1.8" opacity=".7"><animate attributeName="opacity" values=".2;.95;.2" dur="2.8s" repeatCount="indefinite"/></circle>
+              <circle cx="150" cy="340" r="1.4" opacity=".55"><animate attributeName="opacity" values=".15;.8;.15" dur="3.7s" repeatCount="indefinite"/></circle>
+              <circle cx="445" cy="170" r="1.2" opacity=".5"><animate attributeName="opacity" values=".1;.7;.1" dur="4.4s" repeatCount="indefinite"/></circle>
+              <circle cx="75"  cy="190" r="1.5" opacity=".6"><animate attributeName="opacity" values=".2;.85;.2" dur="3.4s" repeatCount="indefinite"/></circle>
+              <circle cx="200" cy="395" r="1.3" opacity=".55"><animate attributeName="opacity" values=".15;.7;.15" dur="3.9s" repeatCount="indefinite"/></circle>
+              <circle cx="330" cy="60"  r="1.4" opacity=".55"><animate attributeName="opacity" values=".15;.75;.15" dur="3.1s" repeatCount="indefinite"/></circle>
+              <circle cx="60"  cy="300" r="1" opacity=".45"><animate attributeName="opacity" values=".1;.6;.1" dur="4.6s" repeatCount="indefinite"/></circle>
+              <circle cx="460" cy="320" r="1.3" opacity=".5"><animate attributeName="opacity" values=".15;.7;.15" dur="3.5s" repeatCount="indefinite"/></circle>
+              <circle cx="110" cy="240" r="1.4" opacity=".5"><animate attributeName="opacity" values=".2;.8;.2" dur="2.9s" repeatCount="indefinite"/></circle>
+              <circle cx="410" cy="240" r="1.2" opacity=".5"><animate attributeName="opacity" values=".15;.7;.15" dur="4.3s" repeatCount="indefinite"/></circle>
+            </g>
+          </svg>
+        </div>
         <!-- Floating metric cards -->
         <div class="hero-metric metric-tl" style="top:-8px;left:-30px;">
           <div class="metric-eyebrow">
@@ -1021,9 +1080,9 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
     <h2 class="section-title fade-up" data-i18n-html="about-title">Built by Operators.<br><span class="accent">Built to Execute.</span></h2>
     <div class="about-grid">
       <div class="about-body fade-up">
-        <p data-i18n="about-p1">FLUX Labs is a <strong>Unified Growth Partner</strong> for companies serious about turning their vision into value. We sit at the intersection of Web2 and Web3 — and are already built for intelligence, connected era beyond.</p>
-        <p data-i18n="about-p2">We started as operators, not consultants. That means we don’t just understand the gap between strategy and execution — <strong>we were built to close it.</strong> We know firsthand why that gap is where most growth initiatives fail.</p>
-        <p data-i18n="about-p3">We combine business strategy, brand infrastructure, technical delivery, and marketing execution in a single, integrated partnership. From Web3 protocols to AI-native applications to IoT ecosystems — we build what matters, today and tomorrow. Every engagement is built around one question: <strong>what does it actually take to grow this business?</strong></p>
+        <p data-i18n="about-p1">FLUX Labs is a <strong>Unified Growth Partner</strong> for companies serious about turning vision into value. We sit at the intersection of the traditional and the intelligent — and are already built for the connected era beyond.</p>
+        <p data-i18n="about-p2">We started as operators, not consultants. We don’t just understand the gap between strategy and execution — <strong>we were built to close it.</strong> That gap is where most growth fails.</p>
+        <p data-i18n="about-p3">Strategy. Brand. Tech. Marketing. One integrated partnership. From established enterprises to AI-native applications to IoT ecosystems — we build what matters, today and tomorrow. Every engagement starts with one question: <strong>What does it actually take to grow this business?</strong></p>
       </div>
       <div class="about-features fade-up fd1">
         <div class="feature-item">
@@ -1037,7 +1096,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
           <div class="feature-icon">⌥</div>
           <div>
             <div class="feature-title" data-i18n="f2-title">Code That Ships</div>
-            <div class="feature-desc" data-i18n="f2-desc">From Web3 infrastructure to AI-native applications — we build what matters.</div>
+            <div class="feature-desc" data-i18n="f2-desc">From legacy systems to intelligent ecosystems — we build what matters.</div>
           </div>
         </div>
         <div class="feature-item">
@@ -1063,7 +1122,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
 
 <!-- ═══ STATS ═══════════════════════════════ -->
 <section id="stats">
-  <img src="assets/img-a7114b2284.png" alt="" class="stats-map-bg" loading="lazy">
+  <img src="stats.png" alt="" class="stats-map-bg" loading="lazy">
   <div class="container">
     <div class="stats-grid-wrap">
       <div class="stats-left-text fade-up">
@@ -1206,7 +1265,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
               <div class="process-step-title" data-i18n="p1-title">Assess</div>
               <div class="process-step-badge" data-i18n="p1-badge">Discovery &amp; Audit</div>
             </div>
-            <p class="process-step-desc" data-i18n="p1-desc">We audit across Web2, Web3, and beyond — mapping the business landscape, defining the real challenge, and establishing a clear commercial baseline. No assumptions, only clarity.</p>
+            <p class="process-step-desc" data-i18n="p1-desc">We audit across industries and technologies — mapping the business landscape, defining the real challenge, and establishing a clear commercial baseline. No assumptions. Only clarity.</p>
           </div>
         </div>
         <div class="process-step fade-up fd1">
@@ -1262,110 +1321,110 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
     <div class="partners-header fade-up">
       <div class="section-label" style="justify-content:center;display:flex;"><span class="tag" data-i18n="part-tag">Trusted By</span></div>
       <h2 class="section-title" style="text-align:center;margin-top:16px;" data-i18n-html="part-title">Ecosystems &amp; Industries<br><span class="accent">We Support</span></h2>
-      <p class="section-sub" style="text-align:center;white-space:nowrap;margin:18px auto 0;" data-i18n="part-sub">From Web3 protocols to global industries — we build where it matters.</p>
+      <p class="section-sub" style="text-align:center;white-space:nowrap;margin:18px auto 0;" data-i18n="part-sub">From Established to Global Industries — We build where it matters.</p>
     </div>
     <div class="partners-marquee-area">
     <!-- Row 1: left→right, speed 35s -->
     <div class="marquee-wrap fade-up" data-dir="left" style="--speed:35s">
       <div class="marquee-track">
-        <div class="partner-logo"><img src="assets/img-c97088dda5.png" alt="Partner 1" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-e048669ad2.png" alt="Partner 2" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-db1becc687.png" alt="Partner 3" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-778806cab6.png" alt="Partner 4" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-0ab1390300.png" alt="Partner 5" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-e73d649d02.png" alt="Partner 6" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-4c7bc39a43.png" alt="Partner 7" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-31ed908b18.png" alt="Partner 8" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-ec913351af.png" alt="Partner 9" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-62bc7e029b.png" alt="Partner 10" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-01.png" alt="Partner 1" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-02.png" alt="Partner 2" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-03.png" alt="Partner 3" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-04.png" alt="Partner 4" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-05.png" alt="Partner 5" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-06.png" alt="Partner 6" loading="lazy"></div>
+        <div class="partner-logo" style="--scale:1.35"><img src="partner-07.png" alt="Partner 7" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-08.png" alt="Partner 8" loading="lazy"></div>
+        <div class="partner-logo" style="--scale:1.10"><img src="partner-09.png" alt="Partner 9" loading="lazy"></div>
+        <div class="partner-logo" style="--scale:1.15"><img src="partner-10.png" alt="Partner 10" loading="lazy"></div>
         <!-- duplicate for seamless loop -->
-        <div class="partner-logo"><img src="assets/img-c97088dda5.png" alt="Partner 1" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-e048669ad2.png" alt="Partner 2" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-db1becc687.png" alt="Partner 3" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-778806cab6.png" alt="Partner 4" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-0ab1390300.png" alt="Partner 5" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-e73d649d02.png" alt="Partner 6" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-4c7bc39a43.png" alt="Partner 7" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-31ed908b18.png" alt="Partner 8" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-ec913351af.png" alt="Partner 9" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-62bc7e029b.png" alt="Partner 10" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-01.png" alt="Partner 1" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-02.png" alt="Partner 2" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-03.png" alt="Partner 3" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-04.png" alt="Partner 4" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-05.png" alt="Partner 5" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-06.png" alt="Partner 6" loading="lazy"></div>
+        <div class="partner-logo" style="--scale:1.35"><img src="partner-07.png" alt="Partner 7" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-08.png" alt="Partner 8" loading="lazy"></div>
+        <div class="partner-logo" style="--scale:1.10"><img src="partner-09.png" alt="Partner 9" loading="lazy"></div>
+        <div class="partner-logo" style="--scale:1.15"><img src="partner-10.png" alt="Partner 10" loading="lazy"></div>
       </div>
     </div>
 
     <!-- Row 2: right→left, speed 40s -->
     <div class="marquee-wrap fade-up fd1" data-dir="right" style="--speed:40s">
       <div class="marquee-track">
-        <div class="partner-logo"><img src="assets/img-340667eaa4.png" alt="Partner 11" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-51789f62cd.png" alt="Partner 12" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-c48dc3e568.png" alt="Partner 13" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-ef681f6be0.png" alt="Partner 14" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-cc2284fc51.png" alt="Partner 15" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-58407ad6dc.png" alt="Partner 16" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-e544d8ef13.png" alt="Partner 17" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-17657b03ac.png" alt="Partner 18" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-98bb89c430.png" alt="Partner 19" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-813a5c95af.png" alt="Partner 20" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-11.png" alt="Partner 11" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-12.png" alt="Partner 12" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-13.png" alt="Partner 13" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-14.png" alt="Partner 14" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-15.png" alt="Partner 15" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-16.png" alt="Partner 16" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-17.png" alt="Partner 17" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-18.png" alt="Partner 18" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-19.png" alt="Partner 19" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-20.png" alt="Partner 20" loading="lazy"></div>
         <!-- duplicate for seamless loop -->
-        <div class="partner-logo"><img src="assets/img-340667eaa4.png" alt="Partner 11" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-51789f62cd.png" alt="Partner 12" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-c48dc3e568.png" alt="Partner 13" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-ef681f6be0.png" alt="Partner 14" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-cc2284fc51.png" alt="Partner 15" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-58407ad6dc.png" alt="Partner 16" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-e544d8ef13.png" alt="Partner 17" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-17657b03ac.png" alt="Partner 18" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-98bb89c430.png" alt="Partner 19" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-813a5c95af.png" alt="Partner 20" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-11.png" alt="Partner 11" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-12.png" alt="Partner 12" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-13.png" alt="Partner 13" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-14.png" alt="Partner 14" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-15.png" alt="Partner 15" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-16.png" alt="Partner 16" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-17.png" alt="Partner 17" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-18.png" alt="Partner 18" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-19.png" alt="Partner 19" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-20.png" alt="Partner 20" loading="lazy"></div>
       </div>
     </div>
 
     <!-- Row 3: left→right, speed 32s -->
     <div class="marquee-wrap fade-up fd2" data-dir="left" style="--speed:32s">
       <div class="marquee-track">
-        <div class="partner-logo"><img src="assets/img-0064ad6e20.png" alt="Partner 21" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-976db6dc5e.png" alt="Partner 22" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-cb26873547.png" alt="Partner 23" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-357561954e.png" alt="Partner 24" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-a8344fc587.png" alt="Partner 25" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-e0df6e9abe.png" alt="Partner 26" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-c8c0afdd6a.png" alt="Partner 27" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-2c09fca64e.png" alt="Partner 28" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-cb081f6ac3.png" alt="Partner 29" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-0d4b5b7e2d.png" alt="Partner 30" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-21.png" alt="Partner 21" loading="lazy"></div>
+        <div class="partner-logo"><img src="8.png" alt="Dong Ma Huang Pin" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-23.png" alt="Partner 23" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-24.png" alt="Partner 24" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-25.png" alt="Partner 25" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-26.png" alt="Partner 26" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-27.png" alt="Partner 27" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-28.png" alt="Partner 28" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-29.png" alt="Partner 29" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-30.png" alt="Partner 30" loading="lazy"></div>
         <!-- duplicate for seamless loop -->
-        <div class="partner-logo"><img src="assets/img-0064ad6e20.png" alt="Partner 21" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-976db6dc5e.png" alt="Partner 22" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-cb26873547.png" alt="Partner 23" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-357561954e.png" alt="Partner 24" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-a8344fc587.png" alt="Partner 25" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-e0df6e9abe.png" alt="Partner 26" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-c8c0afdd6a.png" alt="Partner 27" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-2c09fca64e.png" alt="Partner 28" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-cb081f6ac3.png" alt="Partner 29" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-0d4b5b7e2d.png" alt="Partner 30" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-21.png" alt="Partner 21" loading="lazy"></div>
+        <div class="partner-logo"><img src="8.png" alt="Dong Ma Huang Pin" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-23.png" alt="Partner 23" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-24.png" alt="Partner 24" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-25.png" alt="Partner 25" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-26.png" alt="Partner 26" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-27.png" alt="Partner 27" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-28.png" alt="Partner 28" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-29.png" alt="Partner 29" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-30.png" alt="Partner 30" loading="lazy"></div>
       </div>
     </div>
 
     <!-- Row 4: right→left, speed 38s -->
     <div class="marquee-wrap fade-up fd3" data-dir="right" style="--speed:38s">
       <div class="marquee-track">
-        <div class="partner-logo"><img src="assets/img-7a72ad7abc.png" alt="Partner 31" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-c999ea24c6.png" alt="Partner 32" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-77aebd9c84.png" alt="Partner 33" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-5a21badcfc.png" alt="Partner 34" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-ad2ddbb803.png" alt="Partner 35" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-296b8fba23.png" alt="Partner 36" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-859a969587.png" alt="Partner 37" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-36508b6d42.png" alt="Partner 38" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-31.png" alt="Partner 31" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-32.png" alt="Partner 32" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-33.png" alt="Partner 33" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-34.png" alt="Partner 34" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-35.png" alt="Partner 35" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-36.png" alt="Partner 36" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-37.png" alt="Partner 37" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-38.png" alt="Partner 38" loading="lazy"></div>
         <!-- duplicate for seamless loop -->
-        <div class="partner-logo"><img src="assets/img-7a72ad7abc.png" alt="Partner 31" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-c999ea24c6.png" alt="Partner 32" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-77aebd9c84.png" alt="Partner 33" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-5a21badcfc.png" alt="Partner 34" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-ad2ddbb803.png" alt="Partner 35" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-296b8fba23.png" alt="Partner 36" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-859a969587.png" alt="Partner 37" loading="lazy"></div>
-        <div class="partner-logo"><img src="assets/img-36508b6d42.png" alt="Partner 38" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-31.png" alt="Partner 31" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-32.png" alt="Partner 32" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-33.png" alt="Partner 33" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-34.png" alt="Partner 34" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-35.png" alt="Partner 35" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-36.png" alt="Partner 36" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-37.png" alt="Partner 37" loading="lazy"></div>
+        <div class="partner-logo"><img src="partner-38.png" alt="Partner 38" loading="lazy"></div>
       </div>
     </div>
     </div>
@@ -1373,7 +1432,19 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
     <div class="testimonial-wrap fade-up fd2">
       <p class="testimonial-quote" data-i18n="testi-quote">"FLUX Labs didn't just deliver a strategy — they stayed in the room and built it with us. From protocol architecture to go-to-market, they are the kind of partner you rarely find."</p>
       <div class="testimonial-author" data-i18n="testi-author">Vincent Tan — Founder, KOI Car Rental</div>
-      <img src="assets/img-ec913351af.png" alt="KOI Car Rental">
+      <img src="partner-09.png" alt="KOI Car Rental">
+    </div>
+
+    <div class="testimonial-wrap fade-up fd2">
+      <p class="testimonial-quote" data-i18n="testi2-quote">"I've worked with multiple incubators and accelerators. FLUX Labs is different. They don't disappear after the initial sprint. They embedded with my team, helped architect the technical backbone, and then pivoted seamlessly into go-to-market execution. For entrepreneurs who need more than funding—who need real building partners—FLUX Labs is the gold standard."</p>
+      <div class="testimonial-author" data-i18n="testi2-author">Lin Zhong Xiao — Founder, Dong Ma Huang Pin</div>
+      <img src="8.png" alt="Dong Ma Huang Pin">
+    </div>
+
+    <div class="testimonial-wrap fade-up fd2">
+      <p class="testimonial-quote" data-i18n="testi3-quote">"As a Head of Marketing, I've worked with plenty of incubators that hand you a glossy strategy deck and then vanish. FLUX Labs is nothing like that. They didn't just help us refine our positioning and narrative — they stayed in the room and built the go-to-market motion alongside my team. From translating complex technical architecture into customer-ready messaging to launching the product, they were there for every single step. If you need a partner who actually stays until the job is done — not just a strategist — FLUX Labs is the one."</p>
+      <div class="testimonial-author" data-i18n="testi3-author">Felix Tiong — Head of Marketing, CoinUp</div>
+      <img src="12.png" alt="CoinUp" class="testi-sm">
     </div>
   </div>
 </section>
@@ -1388,10 +1459,10 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
       <h2 class="section-title" style="text-align:center;margin-top:16px;" data-i18n-html="team-title">The People Behind</h2>
       <p class="section-sub" style="text-align:center;max-width:520px;margin:16px auto 0;" data-i18n="team-sub">Operators, builders, and strategists — united by one mission: turning vision into value.</p>
     </div>
-    <div class="team-grid">
+    <div class="team-grid team-grid-primary">
       <!-- Win, L. -->
       <div class="team-card fade-up">
-        <img class="team-card-img" src="assets/img-9b44555a02.png" alt="Win, L." loading="lazy">
+        <img class="team-card-img" src="team-win-l.png" alt="Win, L." loading="lazy">
         <div class="team-card-body">
           <div class="team-card-name">Win, L.</div>
           <div class="team-card-role" data-i18n="team-1-role">Chief Executive Officer | Founding Partner</div>
@@ -1406,7 +1477,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
       </div>
       <!-- Madeline, L. -->
       <div class="team-card fade-up fd1">
-        <img class="team-card-img" src="assets/img-60e24b568c.png" alt="Madeline, L." loading="lazy">
+        <img class="team-card-img" src="team-madeline-l.png" alt="Madeline, L." loading="lazy">
         <div class="team-card-body">
           <div class="team-card-name">Madeline, L.</div>
           <div class="team-card-role" data-i18n="team-2-role">Head of Strategic Portfolio & Operations</div>
@@ -1419,11 +1490,11 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
           <div class="team-card-quote" data-i18n="team-2-quote">I've learned that good operations come from service, not control. I untangle complexity and build simple, useful systems — so founders can focus on what they do best.</div>
         </div>
       </div>
-      <!-- Felix, T. -->
+      <!-- Tiong, HY. -->
       <div class="team-card fade-up fd2">
-        <img class="team-card-img" src="assets/img-a288a1d115.png" alt="Felix, T." loading="lazy">
+        <img class="team-card-img" src="team-felix-t.png" alt="Tiong, HY." loading="lazy">
         <div class="team-card-body">
-          <div class="team-card-name">Felix, T.</div>
+          <div class="team-card-name">Tiong, HY.</div>
           <div class="team-card-role" data-i18n="team-3-role">Head of Strategic Growth & Marketing</div>
           <div class="team-card-divider"></div>
           <div class="team-card-stats">
@@ -1436,7 +1507,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
       </div>
       <!-- Aswin, T. -->
       <div class="team-card fade-up fd3">
-        <img class="team-card-img" src="assets/img-49e0029b2c.png" alt="Aswin, T." loading="lazy">
+        <img class="team-card-img" src="team-aswin-t.png" alt="Aswin, T." loading="lazy">
         <div class="team-card-body">
           <div class="team-card-name">Aswin, T.</div>
           <div class="team-card-role" data-i18n="team-4-role">Head of Strategic Technology</div>
@@ -1444,13 +1515,16 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
           <div class="team-card-stats">
             <span class="team-stat"><span class="team-stat-num">12+</span> <span data-i18n="team-4-s1">Yrs Tech Architecture</span></span>
             <span class="team-stat"><span class="team-stat-num">40+</span> <span data-i18n="team-4-s2">Projects Delivered</span></span>
+            <span class="team-stat"><span class="team-stat-num">50+</span> <span data-i18n="team-4-s3">Blockchain & AI Integrations</span></span>
           </div>
           <div class="team-card-quote" data-i18n="team-4-quote">The hardest part isn't writing code — it's solving the right problem, at the right time, with the right complexity. I assists businesses avoid common pitfalls and build technology that truly supports their business.</div>
         </div>
       </div>
+    </div>
+    <div class="team-grid team-grid-secondary">
       <!-- Ryan, K. -->
       <div class="team-card fade-up">
-        <img class="team-card-img" src="assets/img-1c6b57a4e3.png" alt="Ryan, K." loading="lazy">
+        <img class="team-card-img" src="team-ryan-k.png" alt="Ryan, K." loading="lazy">
         <div class="team-card-body">
           <div class="team-card-name">Ryan, K.</div>
           <div class="team-card-role" data-i18n="team-5-role">Head of Strategic Client Success</div>
@@ -1459,34 +1533,36 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
             <span class="team-stat"><span class="team-stat-num">8+</span> <span data-i18n="team-5-s1">Yrs Client Delivery</span></span>
             <span class="team-stat"><span class="team-stat-num">80+</span> <span data-i18n="team-5-s2">Enterprise Projects</span></span>
             <span class="team-stat"><span class="team-stat-num">85%+</span> <span data-i18n="team-5-s3">Client Renewal</span></span>
-            <span class="team-stat"><span class="team-stat-num">95%+</span> <span data-i18n="team-5-s4">Satisfaction Rate</span></span>
           </div>
           <div class="team-card-quote" data-i18n="team-5-quote">The moments I treasure most are when the founders say, "We feel safe with you around." I see myself as part of your team — whatever resources you need, whatever problems come up, just call me.</div>
         </div>
       </div>
       <!-- Dr. XYon, T. -->
       <div class="team-card fade-up fd1">
-        <img class="team-card-img" src="assets/img-12f5926e32.png" alt="Dr. XYon, T." loading="lazy">
+        <img class="team-card-img" src="team-dr-xyon-t.png" alt="Dr. XYon, T." loading="lazy">
         <div class="team-card-body">
           <div class="team-card-name">Dr. XYon, T.</div>
           <div class="team-card-role" data-i18n="team-6-role">Strategic Advisor</div>
           <div class="team-card-divider"></div>
           <div class="team-card-stats">
-            <span class="team-stat"><span class="team-stat-num">10+</span> <span data-i18n="team-6-s1">Yrs Strategy & Investment</span></span>
-            <span class="team-stat"><span class="team-stat-num">50+</span> <span data-i18n="team-6-s2">Enterprises Supported</span></span>
+            <span class="team-stat"><span class="team-stat-num">10+</span> <span data-i18n="team-6-s1">Yrs in Strategy & Investment</span></span>
+            <span class="team-stat"><span class="team-stat-num">50+</span> <span data-i18n="team-6-s2">Ventures Advised</span></span>
+            <span class="team-stat"><span class="team-stat-num" data-i18n="team-6-s3n">$300M+</span> <span data-i18n="team-6-s3">Portfolio Value</span></span>
           </div>
           <div class="team-card-quote" data-i18n="team-6-quote">The smartest path isn't luck; it's DISCIPLINE. Most projects fail from avoidable mistakes, not bad ideas. That's the reason for bringing experience, clarity, and action together — let's build something that lasts.</div>
         </div>
       </div>
       <!-- Yong, E. -->
       <div class="team-card fade-up fd2">
-        <img class="team-card-img" src="assets/img-f6e556c661.png" alt="Yong, E." loading="lazy">
+        <img class="team-card-img" src="team-yong-e.png" alt="Yong, E." loading="lazy">
         <div class="team-card-body">
           <div class="team-card-name">Yong, E.</div>
           <div class="team-card-role" data-i18n="team-7-role">Strategic Advisor</div>
           <div class="team-card-divider"></div>
           <div class="team-card-stats">
             <span class="team-stat"><span class="team-stat-num">10+</span> <span data-i18n="team-7-s1">Yrs Strategy & Financing</span></span>
+            <span class="team-stat"><span class="team-stat-num">20+</span> <span data-i18n="team-7-s2">Strategic Advisory Engagements</span></span>
+            <span class="team-stat"><span class="team-stat-num">50+</span> <span data-i18n="team-7-s3">Executive Sessions Facilitated</span></span>
           </div>
           <div class="team-card-quote" data-i18n="team-7-quote">Projects don't need more cleverness. They need someone to step back with them — a second pair of eyes, honest thoughts at the right moment. That's who I am.</div>
         </div>
@@ -1522,7 +1598,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
           <a href="https://t.me/FluxLabs_HQ" target="_blank" class="contact-link">
             <div class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M22.05 1.577c-.393-.016-.784.08-1.117.235-.484.186-4.92 1.902-9.41 3.64L2.223 8.94c-.946.363-1.524.954-1.397 1.665.122.685.778 1.03 1.534 1.263l4.1 1.27a1.927 1.927 0 002.06-.467L17.7 4.843c.26-.238.549.114.33.351L10.478 13.15a1.927 1.927 0 00-.413 1.618l1.357 6.14c.162.733.63 1.09 1.183 1.09.525 0 .98-.33 1.394-.79l2.07-2.307 4.259 3.155c.508.376 1.01.526 1.46.526 1.013 0 1.674-.793 1.882-1.935l2.856-17.471c.192-1.177-.503-2.075-1.517-2.12z"/></svg></div>@FluxLabs_Official
           </a>
-          <a href="mailto:admin.fluxlabs@gmail.com" class="contact-link">
+          <a href="mailto:admin.fluxlabs@gmail.com?subject=Website%20Enquiry&body=Hi%2C%20I%20would%20like%20to%20enquire%20about%20your%20service." class="contact-link">
             <div class="contact-link-icon"><svg viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg></div>admin.fluxlabs@gmail.com
           </a>
         </div>
@@ -1533,7 +1609,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
         <div class="form-success-msg" id="formSuccess">
           <div class="form-success-icon">✓</div>
           <div class="form-success-title" data-i18n="form-sent-title">Message Sent!</div>
-          <div class="form-success-sub" data-i18n="form-sent-sub">Thank you — we'll be in touch within 24 hours.</div>
+          <div class="form-success-sub" data-i18n="form-sent-sub">Thanks — we'll get back to you within 24 hours.</div>
         </div>
         <form id="contactForm" novalidate>
           <div class="form-row">
@@ -1591,7 +1667,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
     <p class="cta-sub fade-up" data-i18n="cta-sub">Stop planning. Start building. Let's close the gap — together.</p>
     <div class="cta-btns fade-up">
       <a href="#contact" class="btn-primary" style="font-size:16px;padding:16px 36px;" data-i18n="cta-btn1">Start Your Engagement →</a>
-      <a href="mailto:admin.fluxlabs@gmail.com" class="btn-outline" style="font-size:16px;padding:16px 36px;" data-i18n="cta-btn2">Email Us Directly</a>
+      <a href="mailto:admin.fluxlabs@gmail.com?subject=Website%20Enquiry&body=Hi%2C%20I%20would%20like%20to%20enquire%20about%20your%20service." class="btn-outline" style="font-size:16px;padding:16px 36px;" data-i18n="cta-btn2">Email Us Directly</a>
     </div>
     <div class="cta-line"></div>
   </div>
@@ -1601,7 +1677,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
 <footer>
   <div class="footer-inner">
     <a href="#" class="footer-logo">
-      <img class="footer-logo-img" src="assets/img-8c47efcc1c.png" alt="FLUX Labs">
+      <img class="footer-logo-img" src="flux-labs-logo.png" alt="FLUX Labs">
     </a>
     <div class="footer-links">
       <a href="https://www.facebook.com/fluxlabsofficial" target="_blank">Facebook</a>
@@ -1623,7 +1699,7 @@ const T = {
   en: {
     'nav-lab':'The Lab','nav-services':'What We Serve','nav-process':'How We Build',
     'nav-partners':'Trusted By','nav-team':'The People Behind','nav-cta':'Get In Touch',
-    'hero-tag':'Unified Growth Partner','hero-eyebrow':'From Established to Web3, and Beyond',
+    'hero-tag':'Unified Growth Partner','hero-eyebrow':'From Established to the Intelligent Era, and Beyond',
     'hero-pre':'The Next Chapter of','hero-brand':'FLUX Labs',
     'hero-tagline':'From Vision to Value.',
     'hero-desc':'We turn businesses into measurable results — with strategy that executes, code that ships, and brands that stick.',
@@ -1636,11 +1712,11 @@ const T = {
     's3-label':'Projects Delivered','s3-sub':'Proven execution, at scale.',
     's4-label':'Global Traction','s4-sub':'Measurable impact across markets.',
     'about-tag':'The Lab',
-    'about-p1':'FLUX Labs is a <strong>Unified Growth Partner</strong> for companies serious about turning their vision into value. We sit at the intersection of Web2 and Web3 — and are already built for intelligence, connected era beyond.',
-    'about-p2':'We started as operators, not consultants. That means we don\'t just understand the gap between strategy and execution — <strong>we were built to close it.</strong> We know firsthand why that gap is where most growth initiatives fail.',
-    'about-p3':'We combine business strategy, brand infrastructure, technical delivery, and marketing execution in a single, integrated partnership. From Web3 protocols to AI-native applications to IoT ecosystems — we build what matters, today and tomorrow. Every engagement is built around one question: <strong>what does it actually take to grow this business?</strong>',
+    'about-p1':'FLUX Labs is a <strong>Unified Growth Partner</strong> for companies serious about turning vision into value. We sit at the intersection of the traditional and the intelligent — and are already built for the connected era beyond.',
+    'about-p2':'We started as operators, not consultants. We don\'t just understand the gap between strategy and execution — <strong>we were built to close it.</strong> That gap is where most growth fails.',
+    'about-p3':'Strategy. Brand. Tech. Marketing. One integrated partnership. From established enterprises to AI-native applications to IoT ecosystems — we build what matters, today and tomorrow. Every engagement starts with one question: <strong>What does it actually take to grow this business?</strong>',
     'f1-title':'Strategy That Executes','f1-desc':'We don\'t hand over a deck. We stay in the room until it\'s built.',
-    'f2-title':'Code That Ships','f2-desc':'From Web3 infrastructure to AI-native applications — we build what matters.',
+    'f2-title':'Code That Ships','f2-desc':'From legacy systems to intelligent ecosystems — we build what matters.',
     'f3-title':'Brands That Stick','f3-desc':'Market presence that earns attention and keeps it. Global reach, local precision.',
     'f4-title':'One Accountable Partner','f4-desc':'Strategy, brand, tech, and marketing unified under one roof. No handoffs, no gaps.',
     'svc-tag':'What We Build','svc-sub':'Three integrated practice areas. One accountable partner.',
@@ -1656,14 +1732,18 @@ const T = {
     'pc-3':'Product Design & UX Strategy','pc-4':'Blockchain & Web3 Infrastructure','pc-5':'Technical Systems & API Integration',
     'proc-tag':'How We Build','proc-sub':'Every engagement follows a proven sequence — rigorous at the start, decisive at execution.',
     'proc-cta':'Work With Us →',
-    'p1-title':'Assess','p1-badge':'Discovery & Audit','p1-desc':'We audit across Web2, Web3, and beyond — mapping the business landscape, defining the real challenge, and establishing a clear commercial baseline. No assumptions, only clarity.',
+    'p1-title':'Assess','p1-badge':'Discovery & Audit','p1-desc':'We audit across industries and technologies — mapping the business landscape, defining the real challenge, and establishing a clear commercial baseline. No assumptions. Only clarity.',
     'p2-title':'Design','p2-badge':'Strategy & Architecture','p2-desc':'We develop the strategic and creative framework: positioning, architecture, and solution design. The blueprint before the build.',
     'p3-title':'Build','p3-badge':'Development & Execution','p3-desc':'Execution begins. Strategy becomes infrastructure. Brand becomes presence. Code ships. We move fast without breaking what matters.',
     'p4-title':'Launch & Optimise','p4-badge':'Deployment & Iteration','p4-desc':'Deployment, monitoring, and the first iteration cycle. We treat launch as a start — not a finish.',
     'p5-title':'Scale','p5-badge':'Growth Activation','p5-desc':'With a proven foundation, we identify the highest-leverage growth levers — market expansion, community, distribution, performance — and activate them systematically.',
-    'part-tag':'Trusted By','part-sub':'From Web3 protocols to global industries — we build where it matters.',
+    'part-tag':'Trusted By','part-sub':'From Established to Global Industries — We build where it matters.',
     'testi-quote':'"FLUX Labs didn\'t just deliver a strategy — they stayed in the room and built it with us. From protocol architecture to go-to-market, they are the kind of partner you rarely find."',
     'testi-author':'Vincent Tan — Founder, KOI Car Rental',
+    'testi2-quote':'"I\'ve worked with multiple incubators and accelerators. FLUX Labs is different. They don\'t disappear after the initial sprint. They embedded with my team, helped architect the technical backbone, and then pivoted seamlessly into go-to-market execution. For entrepreneurs who need more than funding—who need real building partners—FLUX Labs is the gold standard."',
+    'testi2-author':'Lin Zhong Xiao — Founder, Dong Ma Huang Pin',
+    'testi3-quote':'"As a Head of Marketing, I\'ve worked with plenty of incubators that hand you a glossy strategy deck and then vanish. FLUX Labs is nothing like that. They didn\'t just help us refine our positioning and narrative — they stayed in the room and built the go-to-market motion alongside my team. From translating complex technical architecture into customer-ready messaging to launching the product, they were there for every single step. If you need a partner who actually stays until the job is done — not just a strategist — FLUX Labs is the one."',
+    'testi3-author':'Felix Tiong — Head of Marketing, CoinUp',
     'team-tag':'Our Team','team-sub':'Operators, builders, and strategists — united by one mission: turning vision into value.',
     'team-1-role':'Chief Executive Officer | Founding Partner',
     'team-1-s1':'Yrs Entrepreneurship','team-1-s2':'Projects Incubated','team-1-s3':'Capital Raised',
@@ -1675,20 +1755,20 @@ const T = {
     'team-3-s1':'Yrs User Growth','team-3-s2':'Projects Led','team-3-s3':'Users Generated',
     'team-3-quote':'Chasing trends matters less than helping a project find its own rhythm. Every good project deserves to be seen. Data and experiments over slogans — testing, learning, and scaling step by step.',
     'team-4-role':'Head of Strategic Technology',
-    'team-4-s1':'Yrs Tech Architecture','team-4-s2':'Projects Delivered',
+    'team-4-s1':'Yrs Tech Architecture','team-4-s2':'Projects Delivered','team-4-s3':'Blockchain & AI Integrations',
     'team-4-quote':'The hardest part isn\'t writing code — it\'s solving the right problem, at the right time, with the right complexity. I assists businesses avoid common pitfalls and build technology that truly supports their business.',
     'team-5-role':'Head of Strategic Client Success',
-    'team-5-s1':'Yrs Client Delivery','team-5-s2':'Enterprise Projects','team-5-s3':'Client Renewal','team-5-s4':'Satisfaction Rate',
+    'team-5-s1':'Yrs Client Delivery','team-5-s2':'Enterprise Projects','team-5-s3':'Client Renewal',
     'team-5-quote':'The moments I treasure most are when the founders say, "We feel safe with you around." I see myself as part of your team — whatever resources you need, whatever problems come up, just call me.',
     'team-6-role':'Strategic Advisor',
-    'team-6-s1':'Yrs Strategy & Investment','team-6-s2':'Enterprises Supported',
+    'team-6-s1':'Yrs in Strategy & Investment','team-6-s2':'Ventures Advised','team-6-s3':'Portfolio Value','team-6-s3n':'$300M+',
     'team-6-quote':'The smartest path isn\'t luck; it\'s DISCIPLINE. Most projects fail from avoidable mistakes, not bad ideas. That\'s the reason for bringing experience, clarity, and action together — let\'s build something that lasts.',
     'team-7-role':'Strategic Advisor',
-    'team-7-s1':'Yrs Strategy & Financing',
+    'team-7-s1':'Yrs Strategy & Financing','team-7-s2':'Strategic Advisory Engagements','team-7-s3':'Executive Sessions Facilitated',
     'team-7-quote':'Projects don\'t need more cleverness. They need someone to step back with them — a second pair of eyes, honest thoughts at the right moment. That\'s who I am.',
     'ct-tag':'Get In Touch','ct-desc':'Whether you\'re launching, scaling, or building across eras — let\'s start the conversation.',
     'form-title':'Start a Conversation','form-sub':'We\'ll get back to you within 24 hours.',
-    'form-sent-title':'Message Sent!','form-sent-sub':'Thank you — we\'ll be in touch within 24 hours.',
+    'form-sent-title':'Message Sent!','form-sent-sub':'Thanks — we\'ll get back to you within 24 hours.',
     'fl-name':'Name','fl-company':'Company','fl-email':'Email','fl-budget':'Budget Range','fl-brief':'Brief',
     'ph-name':'Your name','ph-company':'Company name','ph-email':'your@email.com',
     'ph-budget':'Select a range','ph-brief':'Tell us what you\'re building and what you need...',
@@ -1703,7 +1783,7 @@ const T = {
   zh: {
     'nav-lab':'关于 Flux Labs','nav-services':'服务领域','nav-process':'构建之道',
     'nav-partners':'合作伙伴','nav-team':'核心团队','nav-cta':'立即联系',
-    'hero-tag':'全域增长伙伴','hero-eyebrow':'从既有到Web3，及更远',
+    'hero-tag':'全域增长伙伴','hero-eyebrow':'从传统到智能，超越时代',
     'hero-pre':'全新篇章','hero-brand':'FLUX Labs',
     'hero-tagline':'让愿景成为价值',
     'hero-desc':'我们将企业转化为可量化的成果<br>可执行的战略，能交付的代码，有粘性的品牌',
@@ -1717,12 +1797,12 @@ const T = {
     's3-label':'交付项目','s3-sub':'执行力验证 · 规模落地',
     's4-label':'全球影响力','s4-sub':'跨市场，可量化',
     'about-tag':'关于 Flux Labs',
-    'about-p1':'FLUX Labs 是全域增长伙伴——无论您是准备进入 Web3 的既有企业，还是寻求规模化的 Web3 项目。我们站在战略、品牌、技术与营销的交汇处，已为智能互联的未来做好准备。',
-    'about-p2':'我们从实干家起步，而非顾问。这意味着我们不仅理解战略与执行之间的差距——我们生来就是为了弥合它。',
-    'about-p3':'我们将商业战略、品牌执行、数字基础设施整合于一体，由同一团队负责到底。没有断层，只有执行。',
+    'about-p1':'FLUX Labs 是全域增长伙伴，陪伴那些认真把愿景变成价值的公司。我们站在传统与智能的交汇点，为万物互联的时代而生。',
+    'about-p2':'我们起于实干，而非顾问。我们不仅看懂战略与执行之间的鸿沟 - 我们天生就要填平它。那个鸿沟，正是大多数增长失败的地方。',
+    'about-p3':'战略、品牌、技术、营销 - 一个整合的伙伴关系。从成熟企业到 AI 原生应用，再到 IoT 生态，我们构建真正重要的东西，兼顾当下与未来。每个项目只问一句：你的业务，究竟需要什么才能真正增长？',
     'about-p4':'<strong>从传统到 Web3，以及更远的未来</strong> — 我们在每个阶段与企业并肩，构建真正驱动增长的一切。',
     'f1-title':'战略即执行','f1-desc':'我们不只交付方案，更全程参与，直到落地。',
-    'f2-title':'代码即交付','f2-desc':'从 Web3 基础设施到 AI 原生应用 — 我们构建真正重要的东西。',
+    'f2-title':'代码即交付','f2-desc':'从传统系统到智能生态 - 我们构建真正重要的东西。',
     'f3-title':'品牌即认知','f3-desc':'赢关注，留得住。全球触达，本地精准。',
     'f4-title':'一个负责任的伙伴','f4-desc':'战略、品牌、技术、营销，统一整合，无缝衔接，责任到底。',
     'svc-tag':'我们的服务','svc-sub':'三大核心业务，一家负责任的合作伙伴。',
@@ -1743,9 +1823,13 @@ const T = {
     'p3-title':'构建','p3-badge':'开发与执行','p3-desc':'战略→基建，品牌→认知，代码交付。行动快，价值不减。',
     'p4-title':'启动与优化','p4-badge':'部署与迭代','p4-desc':'部署、监控、迭代。发布只是开始，不是终点。',
     'p5-title':'规模化增长','p5-badge':'增长激活','p5-desc':'识别高杠杆增长引擎：市场扩张、社区、渠道、效果营销 — 并系统激活。',
-    'part-tag':'合作伙伴','part-sub':'从 Web3 到全球产业 — 我们构建于关键之处。',
+    'part-tag':'合作伙伴','part-sub':'从 传统 到全球产业 — 我们构建于关键之处。',
     'testi-quote':'"FLUX Labs 不只是交付了一份战略 — 他们全程参与并与我们共同构建。从协议架构到市场推广，他们是那种难得一遇的合作伙伴。"',
     'testi-author':'Vincent Tan — KOI Car Rental 创始人',
+    'testi2-quote':'"我和很多孵化器、加速器合作过。FLUX Labs 与众不同。他们不会在最初的项目冲刺结束后就消失。他们融入了我的团队，帮助我们搭建了技术架构，然后无缝衔接到市场落地执行。对于创业者来说，如果你需要的不仅仅是资金，而是真正能一起把事做成的伙伴——FLUX Labs 就是黄金标准。"',
+    'testi2-author':'林中晓 — 东马皇品创始人',
+    'testi3-quote':'"作为市场负责人，我见过太多孵化器给你一份漂亮的战略报告然后就消失了。FLUX Labs 完全不同。他们不仅帮我们梳理了定位和叙事，还留下来和我的团队一起把产品推向市场。从技术语言到用户能听懂的价值主张，他们帮我们搭好了每一座桥。对于需要真正并肩作战的伙伴——而不是只给建议的旁观者——FLUX Labs 是最好的选择。"',
+    'testi3-author':'Felix Tiong — CoinUp 市场负责人',
     'team-tag':'核心团队','team-sub':'实干家、建造者、战略家 — 因同一使命而聚：愿景即价值。',
     'team-1-role':'首席执行官 | 创始合伙人',
     'team-1-s1':'年创业经验','team-1-s2':'个孵化项目','team-1-s3':'融资总额',
@@ -1757,16 +1841,16 @@ const T = {
     'team-3-s1':'年用户增长经验','team-3-s2':'个项目主导','team-3-s3':'累计用户增长',
     'team-3-quote':'“与其追逐趋势，不如帮项目找到节奏。每个好项目都值得被看见。用数据和实验代替口号：测试、学习、扩展。”',
     'team-4-role':'战略技术负责人',
-    'team-4-s1':'年技术架构经验','team-4-s2':'个项目交付',
+    'team-4-s1':'年技术架构经验','team-4-s2':'个项目交付','team-4-s3':'区块链与AI集成',
     'team-4-quote':'“最难的不是写代码，而是在正确的时间，用正确的复杂度，解决正确的问题。帮企业避开陷阱，构建支撑业务的技术。”',
     'team-5-role':'战略客户成功负责人',
-    'team-5-s1':'年客户交付经验','team-5-s2':'个企业级项目','team-5-s3':'客户续约率','team-5-s4':'满意度',
+    'team-5-s1':'年客户交付经验','team-5-s2':'个企业级项目','team-5-s3':'客户续约率',
     'team-5-quote':'“我最珍视的，是创始人说‘有你在，我们安心’。我是你团队的一员 — 要资源、有问题，随时找我。”',
     'team-6-role':'战略顾问',
-    'team-6-s1':'年战略与投资经验','team-6-s2':'家企业支持',
+    'team-6-s1':'年战略与投资经验','team-6-s2':'个风险项目/创投顾问','team-6-s3':'投资组合价值','team-6-s3n':'3亿+',
     'team-6-quote':'“最聪明的路不是靠运气，而是靠纪律。大多数项目死于可避免的错误，而非坏创意。把经验、清晰与行动结合起来 — 共建持久的事业。”',
     'team-7-role':'战略顾问',
-    'team-7-s1':'年战略与融资经验',
+    'team-7-s1':'年战略与融资经验','team-7-s2':'战略咨询项目','team-7-s3':'高管策略研讨会',
     'team-7-quote':'“项目不缺聪明才智，缺的是能一起退后一步的人 — 第二双眼睛，在关键时刻给出诚实的想法。这就是我。”',
     'ct-tag':'联系我们','ct-desc':'无论您在启动、扩张，<br>还是跨越不同阶段 — 开始对话。',
     'form-title':'开启对话','form-sub':'我们将在 24 小时内回复您。',
@@ -1931,7 +2015,8 @@ const cntObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.stat-num').forEach(el => cntObs.observe(el));
 
 // ─── CONTACT FORM ────────────────────────────────────
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxLSy-dhORQFzm0QD8-OaGpa_XLOOLLiE9g264S-d8vNG0o_vmE49J7N1BYUGNhcf7thQ/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycby4Xz_3MVV4fcCfShIyveGOzXyBshtND_YhK5a9zem0243rUva78sAMDfA51nk15V3f/exec';
+const FORM_SECRET = 'fluxlabs-prod-7Kp9mQ2nR4xV';
 const form = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const successMsg = document.getElementById('formSuccess');
@@ -1963,15 +2048,16 @@ form.addEventListener('submit', async e => {
   submitBtn.disabled = true;
   submitBtn.classList.add('loading');
   const payload = {
-    timestamp: new Date().toISOString(),
     name: F.name.el.value.trim(),
-    company: document.getElementById('fcompany').value.trim() || '—',
+    company: document.getElementById('fcompany').value.trim(),
     email: F.email.el.value.trim(),
-    budget: F.budget.el.value,
+    budgetRange: F.budget.el.value,
     brief: F.brief.el.value.trim(),
+    pageUrl: window.location.href,
+    secret: FORM_SECRET,
   };
   try {
-    await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
     submitBtn.classList.remove('loading');
     submitBtn.classList.add('success');
     submitBtn.querySelector('.btn-text').style.display = 'flex';
@@ -1979,11 +2065,12 @@ form.addEventListener('submit', async e => {
     setTimeout(() => {
       form.querySelectorAll('.form-row,.form-group,.form-note').forEach(el => el.style.display = 'none');
       successMsg.classList.add('visible');
+      form.reset();
     }, 800);
   } catch {
     submitBtn.disabled = false;
     submitBtn.classList.remove('loading');
-    alert(currentLang === 'zh' ? '发送失败，请发送邮件至 admin.fluxlabs@gmail.com' : 'Something went wrong. Email us at admin.fluxlabs@gmail.com');
+    alert(currentLang === 'zh' ? '发送失败，请稍后再试或直接联系我们。' : 'Something went wrong. Please try again or contact us directly.');
   }
 });
 </script>
