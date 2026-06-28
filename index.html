@@ -366,7 +366,7 @@
   font-family:var(--font-cn); letter-spacing:.02em;
 }
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;max-width:100%;overflow-x:hidden}
 body{background:var(--bg);color:var(--on-surface);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.5}
 
@@ -398,7 +398,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:80px;display:flex;al
 .nav-inner{max-width:1280px;margin:0 auto;width:100%;display:flex;align-items:center;padding:0 80px;}
 .nav-logo{font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--on-surface);text-decoration:none;letter-spacing:-.01em;flex-shrink:0;display:flex;align-items:center;gap:10px}
 .nav-logo-svg{width:34px;height:34px;flex-shrink:0}
-.nav-logo-img{height:38px;width:auto;flex-shrink:0;object-fit:contain}
+.nav-logo-img{height:38px;width:auto;max-width:46vw;flex-shrink:0;object-fit:contain}
 .footer-logo-img{height:47px;width:auto;flex-shrink:0;object-fit:contain}
 .nav-logo .logo-flux{color:var(--on-surface)}
 .nav-logo .logo-labs{color:var(--on-surface);margin-left:2px}
@@ -422,7 +422,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:80px;display:flex;al
 
 /* ── MOBILE MENU DRAWER ── */
 .nav-drawer{display:none;position:fixed;top:80px;left:0;right:0;bottom:0;z-index:999;background:rgba(0,0,0,.5);cursor:pointer}
-.menu-panel{background:#fff;border-radius:16px;padding:20px;width:90%;max-width:360px;margin:16px auto;box-sizing:border-box;box-shadow:0 12px 40px rgba(0,0,0,.3);cursor:default}
+.menu-panel{background:#fff;border-radius:16px;padding:20px;width:auto;max-width:none;margin:16px clamp(14px,4vw,28px);box-sizing:border-box;box-shadow:0 12px 40px rgba(0,0,0,.3);cursor:default}
 .menu-items a{display:block;font-size:16px;color:#1a1a2e;text-decoration:none;padding:16px 0;border-bottom:1px solid #e5e5e5;font-weight:500;text-align:center}
 .menu-items a:last-child{border-bottom:none}
 .menu-items a:hover{color:var(--primary)}
@@ -722,7 +722,7 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
   #stats{padding:64px 0}
   nav{height:68px}
   .nav-drawer{top:68px}
-  .nav-logo-img{height:42px}
+  .nav-logo-img{height:auto;width:auto;max-width:clamp(135px,46vw,210px)}
   .nav-links,.lang-toggle{display:none}
   .nav-hamburger{display:flex}
   nav#navbar .nav-inner{justify-content:space-between;padding:0 20px}
@@ -807,7 +807,6 @@ footer{background:var(--bg);border-top:1px solid var(--border-subtle);padding:14
     <button class="lang-btn active" data-lang-btn="en">EN</button>
     <button class="lang-btn" data-lang-btn="zh">中文</button>
   </div>
-  <a href="#contact" class="nav-cta" data-i18n="nav-cta">Get In Touch</a>
   <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
